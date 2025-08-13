@@ -1,5 +1,3 @@
-import CartButton from "@/components/CartButton";
-import { images, offers } from "@/constants";
 import cn from "clsx";
 import React from "react";
 import {
@@ -8,9 +6,12 @@ import {
   Pressable,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import CartButton from "@/components/CartButton";
+import { images, offers } from "@/constants";
 
 export default function Index() {
   return (
