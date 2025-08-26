@@ -1,16 +1,20 @@
 import { CreateUserParams, SignInParams } from "@/type";
-import { Account, Avatars, Client, Databases, ID, Query } from "react-native-appwrite";
+import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
 
 export const appwriteConfig = {
   endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
   projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
   platform: "com.blitz.blitzfood",
   databaseId: "689a2a3f0015a29a4a6a",
+  bucketId: "68acae390007ae248696",
   userCollectionId: "689a2a68003dc0c47050",
+  categoriesCollectionId: "68acab73000c9c66890a",
+  menuCollectionId: "68acabf90005d20996c6",
+  customizationsCollectionId: "68acacbd0015681f4300",
+  menuCustomizationsCollectionId: "68acad59000fc19a7b82",
 };
 
 export const client = new Client();
-
 client
   .setEndpoint(appwriteConfig.endpoint!)
   .setProject(appwriteConfig.projectId!)
@@ -18,6 +22,7 @@ client
 
 export const account = new Account(client);
 export const databases = new Databases(client);
+export const storage = new Storage(client);
 const avatars = new Avatars(client);
 
 export const createUser = async ({

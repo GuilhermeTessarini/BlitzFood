@@ -1,11 +1,14 @@
+import seed from '@/lib/seed'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Button, SafeAreaView, Text } from 'react-native'
 
 const Search = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>Search</Text>
-    </View>
+
+      <Button title='Seed' onPress={() => seed().catch((error) => console.error('FAILED to seed the database.', error))}/>
+    </SafeAreaView>
   )
 }
 
