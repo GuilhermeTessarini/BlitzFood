@@ -1,4 +1,8 @@
-import { CreateUserParams, GetMenuParams, SignInParams } from "@/type";
+import {
+  CreateUserParams,
+  GetMenuParams,
+  SignInParams
+} from "@/type";
 import {
   Account,
   Avatars,
@@ -102,8 +106,7 @@ export const getMenu = async ({ category, query }: GetMenuParams) => {
       queries
     );
 
-    return menus.documents
-
+    return menus.documents;
   } catch (error) {
     throw new Error(error as string);
   }
@@ -116,7 +119,8 @@ export const getCategories = async () => {
       appwriteConfig.categoriesCollectionId
     );
 
-  } catch (error) {
-    throw new Error(error as string);
+    return categories.documents;
+  } catch (e) {
+    throw new Error(e as string);
   }
 };
