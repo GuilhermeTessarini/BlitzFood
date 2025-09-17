@@ -1,50 +1,48 @@
-# Welcome to your Expo app 👋
+# 🍔 BlitzFood - Aplicativo de Delivery
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+BlitzFood é um aplicativo moderno de delivery de comida desenvolvido com React Native e Expo, oferecendo uma experiência fluida e intuitiva para pedidos de comida online.
 
-## Get started
+## 📱 Funcionalidades
 
-1. Install dependencies
+- **🔐 Autenticação de Usuário**: Sistema completo de login e cadastro
+- **🍕 Catálogo de Produtos**: Navegação por categorias (Burgers, Pizzas, Burritos, etc.)
+- **🔍 Busca Inteligente**: Pesquisa de produtos por nome
+- **🛒 Carrinho de Compras**: Adicionar, remover e personalizar itens
+- **💰 Resumo de Pagamento**: Cálculo automático de totais e taxas
+- **👤 Perfil do Usuário**: Gerenciamento de dados pessoais
+- **📊 Monitoramento**: Integração com Sentry para análise de erros
 
-   ```bash
-   npm install
-   ```
+## 🛠️ Tecnologias Utilizadas
 
-2. Start the app
+### Frontend & Mobile
+- **React Native** - Framework para desenvolvimento mobile
+- **Expo** - Plataforma de desenvolvimento
+- **Expo Router** - Navegação baseada em arquivos
+- **TypeScript** - Tipagem estática
 
-   ```bash
-   npx expo start
-   ```
+### Estilização & UI
+- **NativeWind** - Tailwind CSS para React Native
+- **Expo Image** - Componente otimizado de imagem
 
-In the output, you'll find options to open the app in a
+### Gerenciamento de Estado
+- **Zustand** - Gerenciamento de estado leve e eficiente
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Backend & Database
+- **Appwrite** - Backend-as-a-Service
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Monitoramento & Analytics
+- **Sentry** - Monitoramento de erros e performance
 
-## Get a fresh project
+## 🚀 Instalação e Configuração
 
-When you're ready, run:
+### Pré-requisitos
 
-```bash
-npm run reset-project
-```
+- **Node.js** (versão 18 ou superior)
+- **npm** ou **yarn**
+- **Expo CLI** (instalado globalmente)
+- **Android Studio** (para Android) ou **Xcode** (para iOS)
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## Learn more
 
-To learn more about developing your project with Expo, look at the following resources:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
