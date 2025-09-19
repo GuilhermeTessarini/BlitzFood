@@ -62,7 +62,7 @@
     }
 
     .profile-field {
-        @apply flex flex-row items-center justify-start mb-4;
+        @apply flex flex-row items-center justify-start mb-6;
     }
 
     .profile-field__icon {
@@ -135,5 +135,17 @@
 
     .small-bold {
         @apply text-xs font-quicksand-bold;
+    }
+
+    .space-y-4 > * + * {
+        margin-top: 1rem;
+    }
+
+    .space-y-6 > * + * {
+        margin-top: 1.5rem;
+    }
+
+    .space-x-3 > * + * {
+        margin-left: 0.75rem;
     }
 }
