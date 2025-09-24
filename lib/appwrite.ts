@@ -37,6 +37,8 @@ export const createUser = async ({
   email,
   password,
   name,
+  phoneNumber,
+  address,
 }: CreateUserParams) => {
   try {
     const newAccount = await account.create(ID.unique(), email, password, name);
@@ -55,6 +57,8 @@ export const createUser = async ({
         name,
         accountId: newAccount.$id,
         avatar: avatarUrl,
+        ...(phoneNumber && { phoneNumber }),
+        ...(address && { address }),
       }
     );
   } catch (error) {

@@ -96,6 +96,8 @@ interface CreateUserParams {
     email: string;
     password: string;
     name: string;
+    phoneNumber?: string;
+    address?: string;
 }
 
 interface SignInParams {

@@ -11,20 +11,28 @@ const SignUp = () => {
     name: "",
     email: "",
     password: "",
+    phoneNumber: "",
+    address: "",
   });
 
   const submit = async () => {
-    const { email, password, name } = form;
+    const { email, password, name, phoneNumber, address } = form;
 
-    if (!name || !email || !password)
+    if (!name || !email || !password || !phoneNumber || !address)
       return Alert.alert(
         "Error",
-        "Please enter valid email address & password."
+        "Please enter your name, email address, password, phone number & address."
       );
 
     setIsSubmitting(true);
     try {
-      await createUser({ email, password, name });
+      await createUser({ 
+        email, 
+        password, 
+        name,
+        phoneNumber,
+        address 
+      });
       router.replace("/");
     } catch (error: any) {
       Alert.alert("Error", error.message);
@@ -58,6 +66,25 @@ const SignUp = () => {
         }
         label="Password"
         secureTextEntry
+      />
+
+      <CustomInput
+        placeholder="Enter your phone number"
+        value={form.phoneNumber}
+        onChangeText={(text) =>
+          setForm((prev) => ({ ...prev, phoneNumber: text }))
+        }
+        label="Phone Number"
+        keyboardType="phone-pad"
+      />
+
+      <CustomInput
+        placeholder="Enter your address"
+        value={form.address}
+        onChangeText={(text) =>
+          setForm((prev) => ({ ...prev, address: text }))
+        }
+        label="Address"
       />
 
       <CustomButton title="Sign Up" isLoading={isSubmitting} onPress={submit} />
