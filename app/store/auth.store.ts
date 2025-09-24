@@ -1,4 +1,4 @@
-import { getCurrentUser, signOut } from "@/lib/appwrite";
+import { getCurrentUser, signOut, updateUserProfile } from "@/lib/appwrite";
 import { User } from "@/type";
 import { create } from "zustand";
 
@@ -13,6 +13,11 @@ type AuthState = {
 
   fetchAuthenticatedUser: () => Promise<void>;
   logout: () => Promise<void>;
+  updateProfile: (data: {
+    name?: string;
+    phoneNumber?: string;
+    address?: string;
+  }) => Promise<void>;
 };
 
 const useAuthStore = create<AuthState>((set) => ({
@@ -46,6 +51,28 @@ const useAuthStore = create<AuthState>((set) => ({
       set({ isAuthenticated: false, user: null });
     } catch (error) {
       console.error("Failed to logout:", error);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  updateProfile: async (data) => {
+    const { isLoading, user } = useAuthStore.getState();
+    if (isLoading) return;
+
+    set({ isLoading: true });
+    try {
+      if (!user?.$id) throw new Error("No user found");
+
+      const updatedUser = await updateUserProfile(user.$id, data);
+
+      set({
+        user: updatedUser as unknown as User,
+        isAuthenticated: true,
+      });
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+      throw error;
     } finally {
       set({ isLoading: false });
     }

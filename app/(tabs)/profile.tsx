@@ -1,12 +1,12 @@
-import { useRouter } from 'expo-router'
-import React, { useState } from 'react'
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import CustomButton from '@/components/CustomButton'
-import CustomInput from '@/components/CustomInput'
-import { images } from '@/constants'
-import useAuthStore from '../store/auth.store'
+import CustomButton from "@/components/CustomButton";
+import CustomInput from "@/components/CustomInput";
+import { images } from "@/constants";
+import useAuthStore from "../store/auth.store";
 
 interface ProfileFieldProps {
   label: string;
@@ -15,7 +15,12 @@ interface ProfileFieldProps {
   editable?: boolean;
 }
 
-const ProfileField = ({ label, value, icon, editable = false }: ProfileFieldProps) => (
+const ProfileField = ({
+  label,
+  value,
+  icon,
+  editable = false,
+}: ProfileFieldProps) => (
   <View className="profile-field">
     <View className="profile-field__icon">
       <Image
@@ -26,41 +31,75 @@ const ProfileField = ({ label, value, icon, editable = false }: ProfileFieldProp
       />
     </View>
     <View className="flex-1">
-      <Text className="text-sm text-gray-500 font-quicksand-medium">{label}</Text>
-      <Text className="text-base text-dark-100 font-quicksand-semibold">{value}</Text>
+      <Text className="text-sm text-gray-500 font-quicksand-medium">
+        {label}
+      </Text>
+      <Text className="text-base text-dark-100 font-quicksand-semibold">
+        {value}
+      </Text>
     </View>
   </View>
-)
+);
 
 const Profile = () => {
-  const { user, logout, isLoading } = useAuthStore()
-  const router = useRouter()
-  const [isEditing, setIsEditing] = useState(false)
+  const { user, logout, isLoading, updateProfile } = useAuthStore();
+  const router = useRouter();
+  const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
-    phone: '',
-    address1: '',
-    address2: ''
-  })
+    name: user?.name || "",
+    phoneNumber: user?.phoneNumber || "",
+    address: user?.address || "",
+  });
+
+  React.useEffect(() => {
+    if (user && !isEditing) {
+      setEditData({
+        name: user.name || "",
+        phoneNumber: user.phoneNumber || "",
+        address: user.address || "",
+      });
+    }
+  }, [user, isEditing]);
 
   const handleLogout = async () => {
     try {
-      await logout()
-      router.replace('/sign-in')
+      await logout();
+      router.replace("/sign-in");
     } catch (error) {
-      console.error('Logout failed:', error)
+      console.error("Logout failed:", error);
     }
-  }
+  };
 
-  const handleSaveProfile = () => {
-    // TODO: Implementar salvamento do perfil
-    setIsEditing(false)
-  }
+  const handleSaveProfile = async () => {
+    if (isLoading) return;
+
+    try {
+      await updateProfile({
+        name: editData.name,
+        phoneNumber: editData.phoneNumber,
+        address: editData.address,
+      });
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Failed to save profile:", error);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditData({
+      name: user?.name || "",
+      phoneNumber: user?.phoneNumber || "",
+      address: user?.address || "",
+    });
+    setIsEditing(false);
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ScrollView className="flex-1 px-5 pt-10" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className="flex-1 px-5 pt-10"
+        showsVerticalScrollIndicator={false}
+      >
         <View className="custom-header">
           <TouchableOpacity onPress={() => router.back()}>
             <Image
@@ -70,13 +109,15 @@ const Profile = () => {
             />
           </TouchableOpacity>
 
-          <Text className="text-xl font-quicksand-semibold text-dark-100">Profile</Text>
+          <Text className="text-xl font-quicksand-semibold text-dark-100">
+            Profile
+          </Text>
 
           <TouchableOpacity onPress={() => {}}>
-            <Image 
-              source={images.search} 
-              className="size-5" 
-              resizeMode="contain" 
+            <Image
+              source={images.search}
+              className="size-5"
+              resizeMode="contain"
             />
           </TouchableOpacity>
         </View>
@@ -99,39 +140,32 @@ const Profile = () => {
           </View>
         </View>
 
-        <View className="mb-16">
+        <View className="mb-20">
           {isEditing ? (
             <View className="space-y-6">
               <CustomInput
                 label="Full Name"
                 value={editData.name}
-                onChangeText={(text) => setEditData({ ...editData, name: text })}
+                onChangeText={(text) =>
+                  setEditData({ ...editData, name: text })
+                }
                 placeholder="Enter your full name"
               />
               <CustomInput
-                label="Email"
-                value={editData.email}
-                onChangeText={(text) => setEditData({ ...editData, email: text })}
-                placeholder="Enter your email"
-                keyboardType="email-address"
-              />
-              <CustomInput
                 label="Phone Number"
-                value={editData.phone}
-                onChangeText={(text) => setEditData({ ...editData, phone: text })}
+                value={editData.phoneNumber}
+                onChangeText={(text) =>
+                  setEditData({ ...editData, phoneNumber: text })
+                }
                 placeholder="Enter your phone number"
                 keyboardType="phone-pad"
               />
               <CustomInput
-                label="Address 1"
-                value={editData.address1}
-                onChangeText={(text) => setEditData({ ...editData, address1: text })}
-                placeholder="Enter your address"
-              />
-              <CustomInput
-                label="Address 2"
-                value={editData.address2}
-                onChangeText={(text) => setEditData({ ...editData, address2: text })}
+                label="Address"
+                value={editData.address}
+                onChangeText={(text) =>
+                  setEditData({ ...editData, address: text })
+                }
                 placeholder="Enter your address"
               />
             </View>
@@ -139,27 +173,22 @@ const Profile = () => {
             <>
               <ProfileField
                 label="Full Name"
-                value={user?.name || 'Your Name'}
+                value={user?.name || "Your Name"}
                 icon={images.user}
               />
               <ProfileField
                 label="Email"
-                value={user?.email || 'yourname@example.com'}
+                value={user?.email || "yourname@example.com"}
                 icon={images.envelope}
               />
               <ProfileField
                 label="Phone number"
-                value="Your number here"
+                value={user?.phoneNumber || "Your number here"}
                 icon={images.phone}
               />
               <ProfileField
-                label="Address 1"
-                value="Your address here"
-                icon={images.location}
-              />
-              <ProfileField
-                label="Address 2"
-                value="Your address here"
+                label="Address"
+                value={user?.address || "Your address here"}
                 icon={images.location}
               />
             </>
@@ -172,7 +201,7 @@ const Profile = () => {
               <View className="flex-1">
                 <CustomButton
                   title="Cancel"
-                  onPress={() => setIsEditing(false)}
+                  onPress={handleCancelEdit}
                   style="bg-gray-200"
                   textStyle="text-dark-100"
                 />
@@ -201,7 +230,7 @@ const Profile = () => {
                   }
                 />
               </View>
-              
+
               <CustomButton
                 title="Logout"
                 onPress={handleLogout}
@@ -221,7 +250,7 @@ const Profile = () => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

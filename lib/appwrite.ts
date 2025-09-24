@@ -1,8 +1,4 @@
-import {
-  CreateUserParams,
-  GetMenuParams,
-  SignInParams
-} from "@/type";
+import { CreateUserParams, GetMenuParams, SignInParams } from "@/type";
 import {
   Account,
   Avatars,
@@ -83,6 +79,28 @@ export const signOut = async () => {
   }
 };
 
+export const updateUserProfile = async (
+  userId: string,
+  data: {
+    name?: string;
+    phoneNumber?: string;
+    address?: string;
+  }
+) => {
+  try {
+    const updatedUser = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      userId,
+      data
+    );
+
+    return updatedUser;
+  } catch (error) {
+    throw new Error(error as string);
+  }
+};
+
 export const getCurrentUser = async () => {
   try {
     const currentAccount = await account.get();
@@ -132,5 +150,3 @@ export const getCategories = async () => {
     throw new Error(e as string);
   }
 };
-
-
